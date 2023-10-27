@@ -30,6 +30,7 @@ class CustomPipelineOptions(PipelineOptions):
 
 class ProcessExcel(beam.DoFn):
     def process(self, element):
+        # Convert all values to strings
         transformed_element = {key: str(value) for key, value in element.items()}
 
         yield transformed_element
@@ -94,7 +95,7 @@ def run(argv=None, save_main_session=True):
         # converting the bytes to a pandas dataframe
         df = pd.read_excel(data_bytes)
 
-        # updating column names
+        # updating column names and converting to a dictionary
         df.columns = [clean_column_name(col) for col in df.columns]
         data = df.to_dict(orient="records")
 
