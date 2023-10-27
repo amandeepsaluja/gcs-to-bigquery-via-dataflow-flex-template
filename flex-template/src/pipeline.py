@@ -83,7 +83,6 @@ def run(argv=None, save_main_session=True):
         # extracting information about the file
         gcs_file_path = custom_options.gcs_file_path.get()
         bucket_name = gcs_file_path.split("/")[2]
-        file_name = gcs_file_path.split("/")[-1]
         file_path = gcs_file_path.split("//")[-1].split("/", 1)[-1]
 
         # getting the file from GCS
