@@ -28,18 +28,6 @@ class CustomPipelineOptions(PipelineOptions):
         )
 
 
-class AddMetadata(beam.DoFn):
-    def process(self, element):
-        new_element = dict(element)  # Create a copy of the original dictionary
-
-        # Add a DATETIME column with the current timestamp
-        current_time = datetime.now()
-        new_element["load_datetime"] = current_time
-        new_element["load_date"] = current_time.date()
-
-        yield new_element  # Emit the new dictionary with the added columns
-
-
 class ProcessExcel(beam.DoFn):
     def process(self, element):
         transformed_element = {key: str(value) for key, value in element.items()}
@@ -73,6 +61,22 @@ def run(argv=None, save_main_session=True):
     pipeline_options = PipelineOptions(pipeline_args)
     custom_options = pipeline_options.view_as(CustomPipelineOptions)
     pipeline_options.view_as(SetupOptions).save_main_session = save_main_session
+
+    # Class to add some metadata to the target table
+    class AddMetadata(beam.DoFn):
+        def process(self, element):
+            new_element = dict(element)  # Create a copy of the original dictionary
+
+            # adding source
+            new_element["pipeline_source"] = "Dataflow Flex Template"
+            new_element["file_path"] = custom_options.gcs_file_path.get()
+
+            # Add a DATETIME column with the current timestamp
+            current_time = datetime.now()
+            new_element["load_datetime"] = current_time
+            new_element["load_date"] = current_time.date()
+
+            yield new_element  # Emit the new dictionary with the added columns
 
     # The pipeline will be run on exiting the with block.
     with beam.Pipeline(options=pipeline_options) as p:
