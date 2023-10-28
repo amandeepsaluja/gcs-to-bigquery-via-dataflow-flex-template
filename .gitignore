@@ -167,3 +167,5 @@ cython_debug/
 *.tfstate.*
 *.hcl
 *.tfstate
+
+local-testing/
