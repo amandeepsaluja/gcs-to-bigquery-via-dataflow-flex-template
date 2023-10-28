@@ -14,7 +14,7 @@ resource "docker_image" "image" {
   name     = "${var.docker_address}/${var.gcp_project_id}/${var.docker_registry_path}/${var.docker_image_name}:${var.docker_image_tag}"
   build {
     context    = "${path.module}/${var.python_source_location}"
-    dockerfile = "${path.module}/${var.dockerfile_location}}"
+    dockerfile = "${path.module}/${var.dockerfile_location}"
   }
 }
 
