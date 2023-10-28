@@ -19,7 +19,7 @@ def create_dataflow_job(cloudevent):
 
     print(f"File uploaded: {gcs_file_path}")
 
-    gcs_template_location = "gs://dataflow-bucket-gcp-practice-project-aman/templates/excel-in-gcs-to-bq-v1.json"
+    gcs_template_location = "gs://dataflow-bucket-gcp-practice-project-aman/templates/excel-in-gcs-to-bq-v2.json"
 
     job_name = f"gcs-to-bq-via-dataflow-{datetime.now().strftime('%Y%m%d-%H%M%S')}"
 
