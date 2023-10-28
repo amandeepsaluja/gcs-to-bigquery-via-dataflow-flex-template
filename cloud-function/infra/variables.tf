@@ -55,7 +55,7 @@ variable "bucket_name" {
 
 variable "cf_trigger_bucket_path" {
   type    = string
-  default = "projects/_/buckets/cloud-function-bucket-gcp-practice-project-aman/objects/data/*.xlsx"
+  default = "projects/_/buckets/cloud-function-bucket-gcp-practice-project-aman/objects/data/dataflow-trigger/*.xlsx"
 }
 
 variable "service_account_email" {
