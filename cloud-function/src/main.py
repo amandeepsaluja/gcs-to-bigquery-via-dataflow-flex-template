@@ -17,7 +17,6 @@ def create_dataflow_job(cloudevent):
 
     gcs_file_path = f"gs://{gcs_file_location}"
 
-    # print
     print(f"File uploaded: {gcs_file_path}")
 
     gcs_template_location = "gs://dataflow-bucket-gcp-practice-project-aman/templates/excel-in-gcs-to-bq-v2.json"

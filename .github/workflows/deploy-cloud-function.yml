@@ -33,6 +33,13 @@ jobs:
         run: terraform init
         working-directory: cloud-function/infra
 
+      # To create backup of Cloud Function zip files
+      - name: Terraform Destroy
+        run: terraform destroy -auto-approve
+        working-directory: cloud-function/infra
+        env:
+          TF_VAR_service_account_email: ${{ secrets.SA_EMAIL }}
+
       # Generates an execution plan for Terraform
       - name: Terraform Plan
         run: terraform plan
