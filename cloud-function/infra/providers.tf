@@ -6,7 +6,7 @@ provider "google" {
 
 terraform {
   backend "gcs" {
-    bucket = "gcp-practice-project-aman-terraform-state-bucket"
+    bucket = "terraform-state-bucket-gcp-practice-project-aman"
     prefix = "cloud-function/create-dataflow-job"
   }
 }
