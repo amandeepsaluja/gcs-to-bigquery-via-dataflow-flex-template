@@ -169,3 +169,4 @@ cython_debug/
 *.tfstate
 
 local-testing/
+.terraform/
