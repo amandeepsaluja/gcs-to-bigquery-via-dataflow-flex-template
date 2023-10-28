@@ -1,3 +1,18 @@
+# creating the zip file
+data "archive_file" "this" {
+  type        = "zip"
+  output_path = "/tmp/${var.name}.zip"
+  source_dir  = "../src"
+}
+
+# uploading the zip file to the bucket
+resource "google_storage_bucket_object" "this" {
+  name   = "code/${var.name}/${data.archive_file.this.output_sha}.zip"
+  bucket = var.bucket_name
+  source = data.archive_file.this.output_path
+}
+
+# creating the cloud function
 resource "google_cloudfunctions2_function" "this" {
   name        = var.name
   location    = var.gcp_region
@@ -41,18 +56,4 @@ resource "google_cloudfunctions2_function" "this" {
       operator  = "match-path-pattern" # This allows path patterns to be used in the value field
     }
   }
-}
-
-# creating the zip file
-data "archive_file" "this" {
-  type        = "zip"
-  output_path = "/tmp/${var.name}.zip"
-  source_dir  = "../src"
-}
-
-# uploading the zip file to the bucket
-resource "google_storage_bucket_object" "this" {
-  name   = "code/${var.name}/${data.archive_file.this.output_sha}.zip"
-  bucket = var.bucket_name
-  source = data.archive_file.this.output_path
 }
