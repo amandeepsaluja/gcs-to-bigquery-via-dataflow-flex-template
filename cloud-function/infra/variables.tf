@@ -50,7 +50,7 @@ variable "timeout_seconds" {
 variable "bucket_name" {
   description = "The bucket name where the cloud function code will be stored"
   type        = string
-  default     = "gcp-practice-project-aman-cloud-function-input"
+  default     = "cloud-function-bucket-gcp-practice-project-aman"
 }
 
 variable "cf_trigger_bucket_path" {
