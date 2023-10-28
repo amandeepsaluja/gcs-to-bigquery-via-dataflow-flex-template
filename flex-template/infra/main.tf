@@ -1,29 +1,29 @@
-# # Private Artifact Registry authentication
-# provider "docker" {
-#   alias = "gcr_provider"
-#   registry_auth {
-#     address  = var.docker_address
-#     username = var.docker_username
-#     password = var.gcp_auth_token # comes from GitHub Actions
-#   }
-# }
+# Private Artifact Registry authentication
+provider "docker" {
+  alias = "gcr_provider"
+  registry_auth {
+    address  = var.docker_address
+    username = var.docker_username
+    password = var.gcp_auth_token # comes from GitHub Actions
+  }
+}
 
-# # Build the Docker image
-# resource "docker_image" "image" {
-#   provider = docker.gcr_provider
-#   name     = "${var.docker_address}/${var.gcp_project_id}/${var.docker_registry_path}/${var.docker_image_name}:${var.docker_image_tag}"
-#   build {
-#     context    = "${path.module}/${var.python_source_location}"
-#     dockerfile = "${path.module}/${var.dockerfile_location}"
-#   }
-# }
+# Build the Docker image
+resource "docker_image" "image" {
+  provider = docker.gcr_provider
+  name     = "${var.docker_address}/${var.gcp_project_id}/${var.docker_registry_path}/${var.docker_image_name}:${var.docker_image_tag}"
+  build {
+    context    = "${path.module}/${var.python_source_location}"
+    dockerfile = "${path.module}/${var.dockerfile_location}"
+  }
+}
 
-# # Push the Docker image to the registry
-# resource "docker_registry_image" "dataflow_image" {
-#   provider      = docker.gcr_provider
-#   name          = docker_image.image.name
-#   keep_remotely = true
-# }
+# Push the Docker image to the registry
+resource "docker_registry_image" "dataflow_image" {
+  provider      = docker.gcr_provider
+  name          = docker_image.image.name
+  keep_remotely = true
+}
 
 # Building the Flex Template
 locals {
@@ -76,7 +76,7 @@ locals {
 
 # Loading the Flex Template to GCS
 resource "google_storage_bucket_object" "custom_json" {
-  name         = "templates/${var.docker_image_name}-${var.docker_image_tag}.json"
+  name         = "templates/${var.docker_image_name}-v2.json" # the version has to be manually added so that it doesn't overwrite the previous version
   bucket       = var.dataflow_bucket_name
   content      = local.template_content
   content_type = "application/json"
