@@ -36,6 +36,11 @@ def create_dataflow_job(cloudevent):
             body={
                 "launchParameter": {
                     "jobName": job_name,
+                    "environment": {
+                        "tempLocation": "gs://dataflow-bucket-gcp-practice-project-aman/temp",
+                        "stagingLocation": "gs://dataflow-bucket-gcp-practice-project-aman/staging",
+                        "enableStreamingEngine": False,
+                    },
                     "containerSpecGcsPath": gcs_template_location,
                     "parameters": {
                         "gcs_file_path": gcs_file_path,
