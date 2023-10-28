@@ -1,0 +1,48 @@
+name: Deploy Cloud Function
+
+on: workflow_dispatch
+
+jobs:
+  create-cloud-function:
+    name: Deploy Cloud Function
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # authenticate with gcloud
+      - name: Authenticate to Google Cloud
+        id: auth
+        uses: google-github-actions/auth@v1
+        with:
+          token_format: access_token
+          workload_identity_provider: ${{ secrets.WIF_PROVIDER }}
+          service_account: ${{ secrets.SA_EMAIL }}
+
+      # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+
+      # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
+      - name: Terraform Init
+        run: terraform init
+        working-directory: cloud-function/infra
+
+      # Generates an execution plan for Terraform
+      - name: Terraform Plan
+        run: terraform plan
+        working-directory: cloud-function/infra
+        env:
+          TF_VAR_service_account_email: ${{ secrets.SA_EMAIL }}
+
+      # Builds or changes infrastructure
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
+        working-directory: cloud-function/infra
+        env:
+          TF_VAR_service_account_email: ${{ secrets.SA_EMAIL }}
