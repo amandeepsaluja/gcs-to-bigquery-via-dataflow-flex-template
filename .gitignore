@@ -162,3 +162,8 @@ cython_debug/
 *.xlsx
 *.csv
 *.ipynb
+
+*.exe
+*.tfstate.*
+*.hcl
+*.tfstate
