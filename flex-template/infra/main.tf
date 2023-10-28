@@ -68,7 +68,7 @@ locals {
     defaultEnvironment = {
       stagingLocation       = "gs://${var.dataflow_bucket_name}/staging",
       tempLocation          = "gs://${var.dataflow_bucket_name}/temp",
-      serviceAccountEmail   = "test",
+      serviceAccountEmail   = "${var.service_account_email}",
       enableStreamingEngine = false
     }
   })

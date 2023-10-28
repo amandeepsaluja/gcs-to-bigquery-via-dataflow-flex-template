@@ -37,7 +37,7 @@ variable "docker_image_name" {
 variable "docker_image_tag" {
   type        = string
   description = "Docker image tag"
-  default     = "v1"
+  default     = "v2"
 }
 
 variable "python_source_location" {
@@ -67,5 +67,5 @@ variable "sdk_type" {
 variable "gcp_auth_token" {
 }
 
-variable "sa_email" {
+variable "service_account_email" {
 }

@@ -39,7 +39,7 @@ jobs:
         working-directory: flex-template/infra
         env:
           TF_VAR_gcp_auth_token: ${{ steps.auth.outputs.access_token }}
-          TF_VAR_sa_email: ${{ secrets.SA_EMAIL }}
+          TF_VAR_service_account_email: ${{ secrets.SA_EMAIL }}
 
       # Builds or changes infrastructure
       - name: Terraform Apply
@@ -47,4 +47,4 @@ jobs:
         working-directory: flex-template/infra
         env:
           TF_VAR_gcp_auth_token: ${{ steps.auth.outputs.access_token }}
-          TF_VAR_sa_email: ${{ secrets.SA_EMAIL }}
+          TF_VAR_service_account_email: ${{ secrets.SA_EMAIL }}
