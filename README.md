@@ -14,6 +14,8 @@ As we know, we already have a [Google Provided template](https://cloud.google.co
 6. Deploy the Cloud Function via Terraform
 7. Test the Dataflow Job
 
+## Detailed Blog Post
+
 ## Refrences
 
 - Google Cloud
