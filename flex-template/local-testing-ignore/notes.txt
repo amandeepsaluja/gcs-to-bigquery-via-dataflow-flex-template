@@ -1,0 +1,27 @@
+# gcs-to-bigquery-via-dataflow-flex-template
+
+Repository containing code to build Dataflow Flex template and use Dataflow to build a trigger based pipeline
+
+# Bulid Flex Template
+
+gcloud dataflow flex-template build gs://dataflow-bucket-gcp-practice-project-aman/templates/batch-beam.json \
+ --image-gcr-path "us-central1-docker.pkg.dev/gcp-practice-project-aman/dataflow-custom-template-artifact-registry-repo/batch-beam:latest" \
+ --sdk-language "PYTHON" \
+ --flex-template-base-image "PYTHON3" \
+ --metadata-file "metadata.json" \
+ --py-path "." \
+ --env "FLEX_TEMPLATE_PYTHON_PY_FILE=pipeline.py" \
+ --env "FLEX_TEMPLATE_PYTHON_REQUIREMENTS_FILE=requirements.txt"
+
+gcloud dataflow flex-template build gs://dataflow-bucket-gcp-practice-project-aman/templates/batch-beam.json --image-gcr-path "us-central1-docker.pkg.dev/gcp-practice-project-aman/dataflow-custom-template-artifact-registry-repo/batch-beam:latest" --sdk-language "PYTHON" --flex-template-base-image "PYTHON3" --metadata-file "metadata.json" --py-path "." --env "FLEX_TEMPLATE_PYTHON_PY_FILE=pipeline.py" --env "FLEX_TEMPLATE_PYTHON_REQUIREMENTS_FILE=requirements.txt"
+
+# Run Flex Template
+
+gcloud dataflow flex-template run "sample-test-beam" \
+ --template-file-gcs-location "gs://dataflow-bucket-gcp-practice-project-aman/templates/batch-beam.json" \
+ --parameters gcs_file_path="gs://dataflow-bucket-gcp-practice-project-aman/data/sample_data_1.xlsx" \
+ --parameters custom_gcs_temp_location="gs://dataflow-bucket-gcp-practice-project-aman/temp" \
+ --parameters output_table="dataflow-bucket-gcp-practice-project-aman:raw_layer.test_table" \
+ --region "us-central1"
+
+gcloud dataflow flex-template run "sample-test-beam" --template-file-gcs-location "gs://dataflow-bucket-gcp-practice-project-aman/templates/batch-beam.json" --parameters gcs_file_path="gs://dataflow-bucket-gcp-practice-project-aman/data/sample_data_1.xlsx" --parameters custom_gcs_temp_location="gs://dataflow-bucket-gcp-practice-project-aman/temp" --parameters output_table="gcp-practice-project-aman:raw_layer.test_table" --region "us-central1"
