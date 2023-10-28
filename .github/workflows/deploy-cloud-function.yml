@@ -30,15 +30,8 @@ jobs:
 
       # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
       - name: Terraform Init
-        run: terraform init
+        run: terraform init -reconfigure
         working-directory: cloud-function/infra
-
-      # To create backup of Cloud Function zip files
-      - name: Terraform Destroy
-        run: terraform destroy -auto-approve
-        working-directory: cloud-function/infra
-        env:
-          TF_VAR_service_account_email: ${{ secrets.SA_EMAIL }}
 
       # Generates an execution plan for Terraform
       - name: Terraform Plan
