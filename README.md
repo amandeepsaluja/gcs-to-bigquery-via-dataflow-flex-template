@@ -1,0 +1,2 @@
+- https://cloud.google.com/dataflow/docs/reference/rest/v1b3/projects.locations.flexTemplates/launch
+- https://xebia.com/blog/a-declarative-approach-for-dataflow-flex-templates/
